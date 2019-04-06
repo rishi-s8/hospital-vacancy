@@ -3,6 +3,9 @@
 {% block content %}
 
 <script>
+    function Delete(num) {
+        document.querySelector(`#i${num}`).remove();
+    }
     function Edit(num) {
         var children = Array.from(document.querySelector(`#i${num}`).children);
         children.forEach(
@@ -33,6 +36,7 @@
             <span id="name">{{doctor.docName}}</span><br>
             <span id="dept">{{doctor.contact}}</span><br>
             <a href="#" onclick="Edit('1')">Edit</a>
+            <a href="#" onclick="Delete('1')">Delete</a>
             <form class="form-inline" action="" style="display: none" onsubmit="Revert('1')">
                 <label for="name">Name:</label>
                 <input type="text" class="form-control" id="name">
