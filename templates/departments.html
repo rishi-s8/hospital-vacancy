@@ -3,16 +3,7 @@
 {% block content %}
 
 <script>
-    function Edit(num) {
-        var children = Array.from(document.querySelector(`#i${num}`).children);
-        children.forEach(
-            child => {
-                child.style.display = 'none';
-            }
-        );
 
-        document.querySelector(`#i${num} form`).style.display = 'flex';
-    }
     function Revert(num)
     {
         document.querySelector(`#i${num} form`).style.display = 'none';
@@ -32,7 +23,6 @@
         <li class="list-group-item" id="i1">
             <span id="name">{{doctor.docName}}</span><br>
             <span id="dept">{{doctor.contact}}</span><br>
-            <a href="#" onclick="Edit('1')">Edit</a>
             <form class="form-inline" action="" style="display: none" onsubmit="Revert('1')">
                 <label for="name">Name:</label>
                 <input type="text" class="form-control" id="name">
