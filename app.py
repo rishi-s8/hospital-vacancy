@@ -159,14 +159,22 @@ def get_specialties():
     cur.close()
     return result, data
 
+def get_vacancies():
+    cur = mysql.connection.cursor()
+    result = cur.execute("SELECT vacant_rooms, vacant_icus, vacant_wards FROM hospitals where hospitals.hid = %s", [session["username"]])
+    data = cur.fetchone()
+    cur.close()
+    return data
+
 @app.route('/vacancies')
 @is_logged_in
 def vacancies():
     if session.get('page'):
         session.pop('page')
     result, data = get_specialties()
+    vacancies = get_vacancies()
     if result > 0:
-        return render_template('vacancies.html', articles = data)
+        return render_template('vacancies.html', articles = data, vacancies = vacancies)
     else:
         msg = "No Departments Found"
         return render_template('vacancies.html', msg = msg)
@@ -197,6 +205,40 @@ def departments():
 def department(id):
     session["page"] = id
     return redirect(url_for('departments'))
+
+@app.route('/updateVacancy1')
+@is_logged_in
+def updateVacancy1():
+    if request.method == 'GET':
+        data = request.args.get("new")
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE hospitals set vacant_rooms = %s where hid = %s", [int(data), session['username']])
+        mysql.connection.commit()
+        flash("Updated Successfully", "success")
+    return redirect(url_for('vacancies'))
+
+@app.route('/updateVacancy2')
+@is_logged_in
+def updateVacancy2():
+    if request.method == 'GET':
+        data = request.args.get("new")
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE hospitals set vacant_wards = %s where hid = %s", [int(data), session['username']])
+        mysql.connection.commit()
+        flash("Updated Successfully", "success")
+    return redirect(url_for('vacancies'))
+
+@app.route('/updateVacancy3')
+@is_logged_in
+def updateVacancy3():
+    if request.method == 'GET':
+        data = request.args.get("new")
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE hospitals set vacant_icus = %s where hid = %s", [int(data), session['username']])
+        mysql.connection.commit()
+        flash("Updated Successfully", "success")
+    return redirect(url_for('vacancies'))
+
 
 if __name__ == '__main__':
     app.secret_key = "Rw8w2Y#3Wmoj"

@@ -3,7 +3,7 @@
 {% block content %}
 
 <script>
-  document.querySelector("#vacancy").classList.add("active");    
+  //document.querySelector("#vacancy").classList.add("active");
 
   function Edit(num) {
         var children = Array.from(document.querySelector(`#i${num}`).children);
@@ -15,16 +15,7 @@
 
         document.querySelector(`#i${num} form`).style.display = 'flex';
     }
-    function Revert(num)
-    {
-        document.querySelector(`#i${num} form`).style.display = 'none';
-        var children = Array.from(document.querySelectorAll(`#i${num} :not(form)`));
-        children.forEach(
-            child => {
-                child.style.display = 'initial';
-            }
-        );
-    }
+
 </script>
 
 <div class="col-sm-8">
@@ -40,24 +31,34 @@
             <tbody>
               <tr>
                 <td>Rooms</td>
-                <td>val1</td>
+                <td id="v1">{{ vacancies.vacant_rooms }}</td>
                 <td id="i1"><a href="#" onclick="Edit('1')">Update</a>
-                  <form class="form-inline" action="" style="display: none" onsubmit="Revert('1')">
-                      <label for="name">Name:</label>
-                      <input type="text" class="form-control" id="name"><br>
-                      <button type="submit" class="btn btn-primary">Update</button>
+                  <form class="form-inline" action="/updateVacancy1" style="display: none" METHOD="GET">
+                      <label for="new">New:</label>
+                      <input type="text" class="form-control" id="new" name="new"><br>
+                      <input type="submit" class="btn btn-primary">Update</input>
                     </form></td>
               </tr>
               <tr>
                 <td>Beds</td>
-                <td>val2</td>
-                <td><a href="">Update</a></td>
+                <td id="v2">{{ vacancies.vacant_wards }}</td>
+                <td id="i2"><a href="#" onclick="Edit('2')">Update</a>
+                  <form class="form-inline" action="/updateVacancy2" style="display: none">
+                      <label for="new">New:</label>
+                      <input type="text" class="form-control" id="new" name="new"  ><br>
+                      <button type="submit" class="btn btn-primary">Update</button>
+                    </form></td>
               </tr>
               <tr>
-                <td>ICU Rooms</td>
-                <td>val3</td>
-                <td><a href="">Update</a></td>
-              </tr>
+                  <td>ICUs</td>
+                  <td id="v3">{{ vacancies.vacant_icus }}</td>
+                  <td id="i3"><a href="#" onclick="Edit('3')">Update</a>
+                    <form class="form-inline" action="/updateVacancy3" style="display: none">
+                        <label for="new">New:</label>
+                        <input type="text" class="form-control" id="new" name="new" ><br>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                      </form></td>
+                </tr>
             </tbody>
           </table>
 </div>
