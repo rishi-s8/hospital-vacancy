@@ -3,12 +3,12 @@
 {% block body %}
 
 <div class="container" style="margin-top:30px">
-        <h2> Hospital Name </h2>
+        <h2> {{ session.hname }} </h2>
     <div class="row">
       <div class="col-sm-3">
         <ul class="nav nav-pills flex-column">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Update Vacancies</a>
+            <a class="nav-link active" href="/vacancies">Update Vacancies</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Cardiology</a>
@@ -19,7 +19,9 @@
         </ul>
         <hr class="d-sm-none">
       </div>
-
+      <span>
+        Select an option on the left to continue
+      </span>
       {% block content %} {% endblock %}
     </div>
   </div>
