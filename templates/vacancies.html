@@ -2,6 +2,31 @@
 
 {% block content %}
 
+<script>
+  document.querySelector("#vacancy").classList.add("active");    
+
+  function Edit(num) {
+        var children = Array.from(document.querySelector(`#i${num}`).children);
+        children.forEach(
+            child => {
+                child.style.display = 'none';
+            }
+        );
+
+        document.querySelector(`#i${num} form`).style.display = 'flex';
+    }
+    function Revert(num)
+    {
+        document.querySelector(`#i${num} form`).style.display = 'none';
+        var children = Array.from(document.querySelectorAll(`#i${num} :not(form)`));
+        children.forEach(
+            child => {
+                child.style.display = 'initial';
+            }
+        );
+    }
+</script>
+
 <div class="col-sm-8">
     <h2>Update vacancies</h2>
     <table class="table">
@@ -16,7 +41,12 @@
               <tr>
                 <td>Rooms</td>
                 <td>val1</td>
-                <td><a href="">Update</a></td>
+                <td id="i1"><a href="#" onclick="Edit('1')">Update</a>
+                  <form class="form-inline" action="" style="display: none" onsubmit="Revert('1')">
+                      <label for="name">Name:</label>
+                      <input type="text" class="form-control" id="name"><br>
+                      <button type="submit" class="btn btn-primary">Update</button>
+                    </form></td>
               </tr>
               <tr>
                 <td>Beds</td>
