@@ -1,0 +1,18 @@
+{% extends 'userDashboard.html' %}
+
+{% block content %}
+
+
+<div class="col-sm-8">
+    <ul class="list-group">
+      {% for doctor in doctors %}
+        <li class="list-group-item" id="i1">
+            <span id="name">{{doctor.docName}}</span><br>
+            <span id="dept">{{doctor.contact}}</span><br>
+
+        </li>
+      {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
