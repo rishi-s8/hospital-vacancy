@@ -43,6 +43,37 @@ class RegisterForm(Form):
     icus = IntegerField('Total ICUs', [validators.DataRequired()])
     vacant_icus = IntegerField('Vacant ICUs', [validators.DataRequired()])
 
+class AddDoctorsForm(Form):
+    did = StringField('Doctor ID', [validators.Length(min=1, max=100), validators.DataRequired()])
+    name = StringField('Doctor Name', [validators.Length(min=1, max=50), validators.DataRequired()])
+    dept = StringField('Department', [validators.Length(min=1, max=50), validators.DataRequired()])
+    contact = StringField('Contact', [validators.DataRequired()])
+
+
+@app.route('/addDoctor', methods=['GET', 'POST'])
+def addDoctor():
+    form = AddDoctorsForm(request.form)
+    if request.method == 'POST' and form.validate():
+        did = form.did.data
+        name = form.name.data
+        dept = form.dept.data
+        contact = form.contact.data
+
+        #Create Cursor
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO Doctors(docId, docName, speciality, contact) Values(%s, %s, %s, %s)", (did, name, dept, contact))
+        cur.execute("INSERT INTO Doc_hospital(hid, docID) Values(%s, %s)", (session["username"], did))
+        mysql.connection.commit()
+
+        #Close Connection
+        #cur.close()
+
+        flash("Added Successfully", "success")
+        return redirect(url_for('index'))
+
+    return render_template('addDoctor.html', form=form)
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm(request.form)
