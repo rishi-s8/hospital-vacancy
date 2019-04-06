@@ -103,6 +103,16 @@ def dashboard():
 def vacancies():
     return render_template('vacancies.html')
 
+@app.route('/departments')
+@is_logged_in
+def departments():
+    return render_template('departments.html')
+
+@app.route('/departments/<string:id>')
+@is_logged_in
+def department(id):
+    session["page"] = id
+    return render_template('departments.html')
 
 if __name__ == '__main__':
     app.secret_key = "Rw8w2Y#3Wmoj"

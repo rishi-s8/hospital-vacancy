@@ -8,21 +8,21 @@
       <div class="col-sm-3">
         <ul class="nav nav-pills flex-column">
           <li class="nav-item">
-            <a class="nav-link active" href="/vacancies">Update Vacancies</a>
+            <a class="nav-link" href="/vacancies">Update Vacancies</a>
           </li>
+          
           <li class="nav-item">
-            <a class="nav-link" href="#">Cardiology</a>
+            <a class="nav-link" href="departments/cardiology">article</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Neurology</a>
-          </li>
+          
         </ul>
         <hr class="d-sm-none">
       </div>
-      <span>
-        Select an option on the left to continue
-      </span>
-      {% block content %} {% endblock %}
+      {% block content %} 
+        <span>
+          Select an option on the left to continue
+        </span>
+      {% endblock %}
     </div>
   </div>
 {% endblock %}
