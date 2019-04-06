@@ -12,18 +12,34 @@
                 child.style.display = 'none';
             }
         );
-
         document.querySelector(`#i${num} form`).style.display = 'flex';
+
     }
     function Revert(num)
     {
-        document.querySelector(`#i${num} form`).style.display = 'none';
-        var children = Array.from(document.querySelectorAll(`#i${num} :not(form)`));
-        children.forEach(
-            child => {
-                child.style.display = 'initial';
+      let field;
+      let newval = document.querySelector(`#i${num} form input`).value;
+      if (num==1) field = "vacant_rooms";
+      else if (num==2) field = "vacant_wards";
+      else if (num==3) field = "vacant_icus";
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.querySelector(`#v${num}`).textContent = newval; 
+          document.querySelector(`#i${num} form`).style.display = 'none';
+          var children = Array.from(document.querySelectorAll(`#i${num} :not(form)`));
+
+          children.forEach(
+          child => {
+              child.style.display = 'initial';
             }
-        );
+          );
+        }
+      };
+      xhttp.open("POST", "updateVacancy", true);
+      xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xmlhttp.send(JSON.stringify({ field : newval}));
+      xhttp.send();
     }
 </script>
 
@@ -40,11 +56,11 @@
             <tbody>
               <tr>
                 <td>Rooms</td>
-                <td>val1</td>
+                <td id="v1">val1</td>
                 <td id="i1"><a href="#" onclick="Edit('1')">Update</a>
                   <form class="form-inline" action="" style="display: none" onsubmit="Revert('1')">
-                      <label for="name">Name:</label>
-                      <input type="text" class="form-control" id="name"><br>
+                      <label for="new">New:</label>
+                      <input type="text" class="form-control" id="new"><br>
                       <button type="submit" class="btn btn-primary">Update</button>
                     </form></td>
               </tr>
