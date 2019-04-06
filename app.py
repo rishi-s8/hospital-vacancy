@@ -108,23 +108,63 @@ def logout():
 @app.route('/dashboard')
 @is_logged_in
 def dashboard():
-    return render_template('dashboard.html')
+    cur = mysql.connection.cursor()
+    result = cur.execute("SELECT speciality FROM Doctors, Doc_hospital where Doc_hospital.hid = %s and Doc_hospital.docId = Doctors.docId", [session["username"]])
+    data = cur.fetchall()
+
+    if result > 0:
+        return render_template('dashboard.html', articles = data)
+    else:
+        msg = "No Departments Found"
+        return render_template('dashboard.html', msg = msg)
+
+    cur.close()
+
+def get_specialties():
+    cur = mysql.connection.cursor()
+    result = cur.execute("SELECT speciality FROM Doctors, Doc_hospital where Doc_hospital.hid = %s and Doc_hospital.docId = Doctors.docId", [session["username"]])
+    data = cur.fetchall()
+    cur.close()
+    return result, data
 
 @app.route('/vacancies')
 @is_logged_in
 def vacancies():
-    return render_template('vacancies.html')
+    if session.get('page'):
+        session.pop('page')
+    result, data = get_specialties()
+    if result > 0:
+        return render_template('vacancies.html', articles = data)
+    else:
+        msg = "No Departments Found"
+        return render_template('vacancies.html', msg = msg)
+
+def get_doctors():
+    cur = mysql.connection.cursor()
+    result = cur.execute("SELECT Doctors.docName, Doctors.docId, Doctors.contact FROM Doctors, Doc_hospital where Doc_hospital.hid = %s and Doc_hospital.docId = Doctors.docId and Doctors.speciality = %s", [session["username"], session["page"]])
+    data = cur.fetchall()
+    cur.close()
+    return data
 
 @app.route('/departments')
 @is_logged_in
 def departments():
-    return render_template('departments.html')
+    if not(session.get('page')):
+        return redirect(url_for('dashboard'))
+    result, articles_data = get_specialties()
+    doctors = get_doctors()
+
+    if result > 0:
+        return render_template('departments.html', articles = articles_data, doctors = doctors)
+    else:
+        msg = "No Departments Found"
+        return render_template('departments.html', msg = msg)
 
 @app.route('/departments/<string:id>')
 @is_logged_in
 def department(id):
     session["page"] = id
-    return render_template('departments.html')
+    return redirect(url_for('departments'))
 
 if __name__ == '__main__':
     app.secret_key = "Rw8w2Y#3Wmoj"

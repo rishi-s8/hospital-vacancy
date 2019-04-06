@@ -10,15 +10,15 @@
           <li class="nav-item">
             <a class="nav-link" href="/vacancies">Update Vacancies</a>
           </li>
-          
+          {% for article in articles %}
           <li class="nav-item">
-            <a class="nav-link" href="departments/cardiology">article</a>
+            <a class="nav-link" href="departments/{{article.speciality}}">{{article.speciality}}</a>
           </li>
-          
+          {% endfor %}
         </ul>
         <hr class="d-sm-none">
       </div>
-      {% block content %} 
+      {% block content %}
         <span>
           Select an option on the left to continue
         </span>
