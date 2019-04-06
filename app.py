@@ -197,6 +197,31 @@ def department(id):
     session["page"] = id
     return redirect(url_for('departments'))
 
+@app.route('/userDashboard')
+def user():
+    cur = mysql.connection.cursor()
+    result = cur.execute("Select Distinct speciality from Doctors")
+    specialities = cur.fetchall()
+    result = cur.execute("Select hname, vacant_rooms, vacant_wards, vacant_icus from Login, hospitals where Login.hid = hospitals.hid")
+    data = cur.fetchall()
+    if result > 0:
+        return render_template('userDashboard.html', articles = data, specialities = specialities)
+    else:
+        msg = "No vacancies Found"
+        return render_template('userDashboard.html', msg = msg)
+    cur.close()
+    return render_template('userDashboard.html')
+
+@app.route('/userdepartments/<string:id>')
+def user_dept(id):
+    cur = mysql.connection.cursor()
+    result = cur.execute("Select Distinct speciality from Doctors")
+    specialities = cur.fetchall()
+    result = cur.execute("SELECT docName, contact from Doctors where speciality=%s", [id])
+    doctors = cur.fetchall()
+    cur.close()
+    return render_template('userdepartments.html',specialities = specialities, doctors = doctors)
+
 if __name__ == '__main__':
     app.secret_key = "Rw8w2Y#3Wmoj"
     app.run(debug=True)

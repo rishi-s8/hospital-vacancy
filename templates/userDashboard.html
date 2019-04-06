@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="container" style="margin-top:30px">
+        <h3>Doctors </h3>
+    <div class="row">
+      <div class="col-sm-3">
+        <ul class="nav nav-pills flex-column">
+
+          {% for s in specialities %}
+          <li class="nav-item">
+            <a class="nav-link" href="/userdepartments/{{s.speciality}}">{{s.speciality}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+        <hr class="d-sm-none">
+      </div>
+      {% block content %}
+        <span>
+          <ul class="list-group">
+            {% for article in articles %}
+            <h4>{{article.hname}}</h4>
+              <li class="list-group-item" id="i1">
+                  <span id="name"> Available rooms: &nbsp;{{article.vacant_rooms}}</span><br>
+              </li>
+              <li class="list-group-item" id="i2">
+                  <span id="name"> Available beds in wards: &nbsp;{{article.vacant_wards}}</span><br>
+              </li>
+              <li class="list-group-item" id="i3">
+                  <span id="name"> Available ICUs: &nbsp;{{article.vacant_icus}}</span><br>
+              </li>
+            {% endfor %}
+          </ul><br>
+        </span>
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}
