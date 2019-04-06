@@ -51,6 +51,7 @@ class AddDoctorsForm(Form):
 
 
 @app.route('/addDoctor', methods=['GET', 'POST'])
+@is_logged_in
 def addDoctor():
     form = AddDoctorsForm(request.form)
     if request.method == 'POST' and form.validate():
