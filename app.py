@@ -65,14 +65,16 @@ def login():
         password_candidate = request.form['password']
 
         cur = mysql.connection.cursor()
-        result = cur.execute("SELECT * FROM login where hid = %s", [username])
+        result = cur.execute("SELECT * FROM Login where hid = %s", [username])
         if result>0:
             data = cur.fetchone()
             password = data['password']
-
             if cryptcontext.verify(password_candidate, password):
+                result = cur.execute("SELECT hname FROM Login where hid = %s", [username])
+                data = cur.fetchone()
                 session['logged_in'] = True
                 session['username'] = username
+                session['hname'] = data['hname']
                 flash("You are now logged in", 'success')
                 return redirect(url_for('dashboard'))
             else:
@@ -95,6 +97,11 @@ def logout():
 @is_logged_in
 def dashboard():
     return render_template('dashboard.html')
+
+@app.route('/vacancies')
+@is_logged_in
+def vacancies():
+    return render_template('vacancies.html')
 
 
 if __name__ == '__main__':
