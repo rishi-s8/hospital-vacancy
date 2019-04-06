@@ -40,8 +40,8 @@ class RegisterForm(Form):
     vacant_rooms = IntegerField('Vacant Rooms', [validators.DataRequired()])
     wards = IntegerField('Total Wards', [validators.DataRequired()], render_kw={"style": "display:inline;"})
     vacant_wards = IntegerField('Vacant Wards', [validators.DataRequired()])
-    ICUs = IntegerField('Total ICUs', [validators.DataRequired()])
-    vacant_ICUs = IntegerField('Vacant ICUs', [validators.DataRequired()])
+    icus = IntegerField('Total ICUs', [validators.DataRequired()])
+    vacant_icus = IntegerField('Vacant ICUs', [validators.DataRequired()])
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
