@@ -36,6 +36,6 @@ python app.py
 
 
 
-Find the Video [here](Video: https://drive.google.com/file/d/1YbCvxaowvDqgXdBPh4LjKy7DQUsCyOl4/view?usp=sharing)
+Find the Video [here](https://drive.google.com/file/d/1YbCvxaowvDqgXdBPh4LjKy7DQUsCyOl4/view?usp=sharing)
 
 ``` Made by Team: TheEndGame ```
